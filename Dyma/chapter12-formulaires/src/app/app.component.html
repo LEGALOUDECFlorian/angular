@@ -1,0 +1,50 @@
+<div class="container" style="padding-top: 200px">
+  <form (ngSubmit)="submit()" [formGroup]="form">
+    <div class="d-flex flex-column form-group">
+      <label>Nom</label>
+      <input formControlName="nom" type="text" name="nom" />
+    </div>
+    <div class="d-flex flex-column form-group">
+      <label>Email</label>
+      <input formControlName="email" type="email" name="email" />
+    </div>
+    <div formArrayName="hobbies" class="d-flex flex-column form-group">
+      <label>Hobby</label>
+      <button type="button" class="btn btn-primary" (click)="addHobbies()">
+        Ajouter hobby
+      </button>
+      <input
+        class="m-10"
+        [formControlName]="index"
+        *ngFor="let hobby of hobbies.controls; let index = index"
+        type="text"
+      />
+    </div>
+    <div class="d-flex flex-column form-group">
+      <label>
+        Male
+        <input type="radio" value="male" formControlName="gender" />
+      </label>
+      <label>
+        Female
+        <input type="radio" value="female" formControlName="gender" />
+      </label>
+    </div>
+    <div class="d-flex flex-column form-group">
+      <label
+        >Etes-vous majeur ?
+        <input type="checkbox" name="majeur" />
+      </label>
+    </div>
+    <div class="d-flex flex-column form-group">
+      <select formControlName="city">
+        <option *ngFor="let city of cities" [value]="city.value">{{city.label}}</option>
+      </select>
+    </div>
+    <div class="d-flex flex-column form-group">
+      <label>Mot de passe</label>
+      <input formControlName="password" type="password" name="password" />
+    </div>
+    <button class="btn btn-primary" style="margin-top: 20px">Valider</button>
+  </form>
+</div>

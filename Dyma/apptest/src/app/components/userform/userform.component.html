@@ -1,0 +1,57 @@
+<p>"User"</p>
+
+<p>ById</p>
+<div *ngIf="user">
+  <p>{{ user.id }}-{{ user.lastname }} {{ user.firstname }}</p>
+</div>
+
+<p>All Users</p>
+<div *ngIf="users">
+  <div *ngFor="let user of users">
+    <p>{{ user.id }}-{{ user.lastname }} {{ user.firstname }}</p>
+  </div>
+</div>
+
+<hr />
+
+<div>
+  <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+    <div formGroupName="userForm" >
+      <div>
+        <label>Prenom </label>
+        <input formControlName="firstname" type="text" placeholder="Prenom" />
+      </div>
+      <label
+        >Nom
+        <input formControlName="lastname" type="text" placeholder="Nom" />
+      </label>
+      <label
+        >Email
+        <input formControlName="email" type="email" placeholder="Email" />
+      </label>
+      <label
+        >Mot de passe
+        <input
+          formControlName="password"
+          type="text"
+          placeholder="Mot de passe"
+        />
+      </label>
+      <label
+        >Pseudo
+        <input formControlName="username" type="text" placeholder="Pseudo" />
+      </label>
+    </div>
+    <div formGroupName="addComent">
+      <button (click)="toggleTextArea()" type="button">
+        Ajouter un commentaire
+      </button>
+      <div *ngIf="AddNewComent" [hidden]="!AddNewComent">
+        <textarea id="description" formControlName="description"></textarea>
+      </div>
+    </div>
+    <button>C'est parti</button>
+  </form>
+</div>
+
+<hr />
