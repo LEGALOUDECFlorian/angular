@@ -27,14 +27,10 @@ export class UsersService {
     const url = `${this.apiBaseUrl}${this.apiUser}/${userId}`;
     return this.http.get<User>(url);
   }   
-  // getUsers() {
-  //   const url = `${this.apiBaseUrl}${this.apiUser}`;
-  //   return this.http.get<User>(url);
-  // }   
 
-  getUsers(): Observable<User[]> { // Retourner un Observable<User[]>
+  getUsers(): Observable<User[]> { // Retourne un Observable<User[]>
     const url = `${this.apiBaseUrl}${this.apiUser}`;
-    return this.http.get<User[]>(url); // Préciser le type de retour comme User[]
+    return this.http.get<User[]>(url); // Précise le type de retour comme User[]
   }
 
   createNewUser(userForm: User): Observable<any> {
@@ -43,7 +39,7 @@ export class UsersService {
       .pipe(
         catchError((error) => {
           console.error('Error creating user:', error);
-          throw new Error('Failed to create user'); // Handle error appropriately
+          throw new Error('Failed to create user'); 
         })
       );
   }
@@ -51,24 +47,17 @@ export class UsersService {
   updateRecip(description: any): Observable<any> {
     const url = `${this.apiBaseUrl}${this.apiRecipe}`;
     console.log('Sending update request to:', url);
-    return this.http.patch<any>(url, description) // Change the type of response from 'string' to 'any'
+    return this.http.patch<any>(url, description) 
     .pipe(
       tap(response => {
         console.log('Update response:',{ response});
-        const updatedRecipe = response.description; // Assuming response.data contains the updated recipe
+        const updatedRecipe = response.description; 
         console.log('Updated recipe:', updatedRecipe);
-        // Update your data model with updatedRecipe
       }),
       catchError(error => {
         console.error('Update error:', error);
         throw new Error (error);
       })
     );
-      // catchError((error) => {
-      //   console.error('Error update description:', error);
-      //     throw new Error('Don\'t update description'); // Handle error appropriately
-      // })
-    //)
   }
-
 }
