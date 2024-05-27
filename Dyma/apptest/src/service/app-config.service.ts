@@ -29,5 +29,8 @@ export class AppConfigService {
   get apiRecipe() : string {
     return this.appConfig.apiRecipe;
   }
+  get apiRecipes() : string {
+    return this.appConfig.apiRecipes;
+  }
 
 }

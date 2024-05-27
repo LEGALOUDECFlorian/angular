@@ -1,5 +1,6 @@
 {
   "apiBaseUrl": "http://localhost:4001",
   "apiUser": "/bfb/users",
-  "apiRecipe": "/bfb/recipe/3"
+  "apiRecipe": "/bfb/recipe/3",
+  "apiRecipes": "/bfb/recipe"
 }

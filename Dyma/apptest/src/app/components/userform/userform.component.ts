@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { firstValueFrom, map } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { TestAllItems } from 'src/models/testAllItems';
 import { UsersService } from 'src/service/users.service';
 // import { AppConfigService } from 'src/service/app-config.service';
 
@@ -10,6 +12,7 @@ import { UsersService } from 'src/service/users.service';
   styleUrls: ['./userform.component.scss'],
 })
 export class UserformComponent implements OnInit {
+ 
   public form = this.fb.group({
     userForm: this.fb.group({
       firstname: [''],
@@ -25,6 +28,7 @@ export class UserformComponent implements OnInit {
 
   user!: User;
   users!: User[];
+  allItems!: TestAllItems;
   AddNewComent: boolean = false;
   description: string = '';
 
@@ -35,8 +39,9 @@ export class UserformComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserDetails(10);
+    this.getUserDetails(1);
     this.getUsers();
+    this.getAllItems();
   }
 
   getUserDetails(userId: number) {
@@ -50,6 +55,32 @@ export class UserformComponent implements OnInit {
     });
   }
 
+  // getAllItems(): void {
+  //   this.usersService.getAllItems().subscribe((allItems) => {
+  //     this.allItems = allItems;
+  //     console.log({allItems})
+  //     //return allItems;
+  //   });
+  // }
+
+  async getAllItems(): Promise<TestAllItems> {
+    try {
+      const allItems = await firstValueFrom( 
+        this.usersService.getAllItems().pipe(
+        
+          map(id => ({ allUsers: id.allUsers, allRecipes: id.allRecipes })) 
+        )
+      ); 
+      this.allItems = allItems;
+      console.log({ allItems });
+      return allItems;
+    } catch (error) {
+     
+      console.error("Error fetching items:", error);
+      throw error;
+    }
+  }
+  
   // updateRecipe(): void {
   //   this.usersService.updateRecip(description).subscribe((newComent) => {
   //     this.newComent = description;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+//import { Component } from "@angular/core"; 
 import { AppComponent } from './app.component';
 import { NouveauComponent } from './components/nouveau/nouveau.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ import { UserformComponent } from './components/userform/userform.component';
     FormsModule,
     NgOptimizedImage,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { 

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from './app-config.service';
 import { User } from 'src/app/models/User';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, tap, throwError } from 'rxjs';
+import { TestAllItems } from 'src/models/testAllItems';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class UsersService {
   private apiBaseUrl: string;
   private apiUser: string;
   private apiRecipe: string;
+  private apiRecipes: string;
 
   constructor(
     private http : HttpClient,
@@ -20,7 +22,36 @@ export class UsersService {
       this.apiBaseUrl = this.appConfig.apiBaseUrl;
       this.apiUser = this.appConfig.apiUser;
       this.apiRecipe = this.appConfig.apiRecipe;
+      this.apiRecipes = this.appConfig.apiRecipes;
      }
+
+   getAllItems(): Observable<TestAllItems> {
+    const usersUrl =  `${this.apiBaseUrl}${this.apiUser}`;
+    const recipesUrl = `${this.apiBaseUrl}${this.apiRecipes}`;
+    console.log({recipesUrl})
+    return forkJoin([
+      this.http.get<any[]>(usersUrl).pipe(
+        catchError(error => handleError(error))
+      ),
+      this.http.get<any[]>(recipesUrl).pipe(
+        catchError(
+          error => handleError(error)
+        )
+      )
+    ]).pipe(
+      map(([users, recipes]) => ({
+        allUsers: users,
+        allRecipes: recipes
+      }))
+    );
+  }
+    
+    // // In your component or service
+    // this.myService.getAllItems().subscribe(data => {
+    //   // Use the data.allUsers and data.allRecipes here
+    // });
+
+  
 
   getUserDetails(userId: number) {
     
@@ -28,9 +59,9 @@ export class UsersService {
     return this.http.get<User>(url);
   }   
 
-  getUsers(): Observable<User[]> { // Retourne un Observable<User[]>
+  getUsers(): Observable<User[]> { 
     const url = `${this.apiBaseUrl}${this.apiUser}`;
-    return this.http.get<User[]>(url); // Précise le type de retour comme User[]
+    return this.http.get<User[]>(url); 
   }
 
   createNewUser(userForm: User): Observable<any> {
@@ -61,3 +92,8 @@ export class UsersService {
     );
   }
 }
+
+function handleError(error: any): any {
+  throw new Error('Function not implemented.');
+}
+
