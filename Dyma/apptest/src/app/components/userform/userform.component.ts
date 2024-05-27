@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { firstValueFrom, map } from 'rxjs';
 import { User } from 'src/app/models/User';
-import { TestAllItems } from 'src/models/testAllItems';
+import { TestAllItems } from 'src/app/models/testAllItems';
 import { UsersService } from 'src/service/users.service';
 // import { AppConfigService } from 'src/service/app-config.service';
 

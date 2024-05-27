@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppConfigService } from './app-config.service';
 import { User } from 'src/app/models/User';
 import { Observable, catchError, forkJoin, map, tap, throwError } from 'rxjs';
-import { TestAllItems } from 'src/models/testAllItems';
+import { TestAllItems } from 'src/app/models/testAllItems';
 
 @Injectable({
   providedIn: 'root'
